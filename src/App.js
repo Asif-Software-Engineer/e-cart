@@ -4,23 +4,24 @@ import { Home } from "./components/home/Home";
 import ProductFilter from "../src/components/productfilter/ProductFilter";
 import SingleProduct from "./components/productfilter/SingleProduct";
 import { useSelector } from "react-redux";
-// import Login from './components/login/Login';
-// import Profile from './components/profile/Profile';
+import { Footer } from "./components/footer/Footer";
+import Login from "./components/login/Login";
+import SignUp from "./components/signup/Signup";
 
 function App() {
-  const cart = useSelector((state) => state.cart.cart);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
 
-  console.log("cart", cart);
-  console.log("totalAmount", totalAmount);
-  console.log("totalPrice", totalPrice);
+  const user = useSelector((state) => state.user.user);
+  const {authUser} = user;
+  console.log("user", user);
+  console.log("authUser", authUser);
   
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={ authUser ? <Home /> : <Login/> }></Route>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<SignUp/>}/>
           <Route
             path="/productFilter/:type"
             element={<ProductFilter></ProductFilter>}
@@ -30,6 +31,7 @@ function App() {
             element={<SingleProduct></SingleProduct>}
           ></Route>
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
       {/* <Profile/> */}
       {/* <Login /> */}

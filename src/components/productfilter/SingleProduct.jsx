@@ -11,7 +11,7 @@ export default function SingleProduct() {
   const [size, setSize] = useState(productSize);
   const [color, setColor] = useState(productColor);
   const { id } = useParams();
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -127,7 +127,7 @@ export default function SingleProduct() {
                             name="cokor"
                             value={color}
                             onChange={(e) => setColor(e.target.value)}
-                            className="w-full h-10 bg-transparent placeholder:text-green text-gray border border-green rounded px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                            className="w-full h-10 bg-transparent placeholder:text-green text-gray border border-green rounded px-2 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow-md appearance-none cursor-pointer"
                           >
                             {item.color.map((item, index) => {
                               return (
@@ -195,14 +195,16 @@ export default function SingleProduct() {
                     <button
                       className="px-4 py-2 bg-gray font-bold rounded-lg hover:bg-green"
                       onClick={() =>
-                        dispacth(
+                        dispatch(
                           addToCart({
                             id: item.id,
+                            img: item.img,
                             name: item.name,
+                            text: item.text,
                             size: size,
                             color: color,
                             price: item.price,
-                            amount: 1,
+                            quantity: 1,
                             totalPrice: item.price,
                           })
                         )

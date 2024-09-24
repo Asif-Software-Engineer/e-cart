@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import Cart from "../../features/cart/Cart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/AuthSlice";
 
 export const Navbar = () => {
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const user = useSelector((state) => state.user.user);
+  const { name, image } = user;
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const dispatch = useDispatch();
 
   return (
     <div className="flex justify-center">
@@ -21,9 +28,17 @@ export const Navbar = () => {
             <img src="../assets/images/logo.png" alt="" />
           </div>
           <div className="flex ">
-            <button className="text-center border px-8 py-2 rounded-full hover:bg-black hover:text-white font-bold">
-              Logout
-            </button>
+            <div className="group flex">
+              <button
+                className="relative text-center border px-8 py-2 rounded-full hover:bg-black hover:text-white font-bold"
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </button>
+              <div className="absolute bottom transform translate-y-16 translate-x-[30%] mb-2 w-max p-2 bg-yellow text-black text-sm font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Sign Out
+              </div>
+            </div>
             <div className="flex flex-row justify-center items-center ml-4 border px-4 py-2 rounded-full hover:bg-black hover:text-white font-bold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -68,6 +83,17 @@ export const Navbar = () => {
               <p className="px-2">Shopping Bag</p>
               <div>
                 {open && <Cart openModal={open} setOpen={setOpen}></Cart>}
+              </div>
+            </div>
+            <div className="flex flex-row items-center cursor-pointer pl-4">
+              <img
+                src={image}
+                alt="avatar"
+                className="rounded-full mr-2 w-14 h-14 bg-red"
+              />
+              <div className="flex flex-row font-bold">
+                <p className="leading-none pr-2">Welcome!</p>
+                <p className="leading-none text-green">{name.charAt("0").toUpperCase() + name.slice(1)} </p>
               </div>
             </div>
           </div>
